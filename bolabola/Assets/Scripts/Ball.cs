@@ -41,12 +41,12 @@ public class Ball : MonoBehaviour {
 
     void OnCollisionEnter2D(Collision2D coll)
     {
-        if (coll.gameObject.tag == "Asteroid") 
+		if (coll.gameObject.tag == "Asteroid" && this.gameObject.tag != "NewAsteroid") 
         {
             // Decide whether to split or just boucne based on resistance
             float collResistance = coll.gameObject.GetComponent<Ball>().getResistance();
 
-            resistance -= Random.Range(collResistance / 2, collResistance);
+            resistance -= Random.Range(collResistance / 8, collResistance / 2);
 
             if (resistance < 0)
             {
@@ -67,10 +67,12 @@ public class Ball : MonoBehaviour {
 
     void OnMouseDown()
     {
-        // Update score
-        scorer.updateScore(this.transform.localScale.x);
+		if (this.gameObject.tag != "NewAsteroid") {
+			// Update score
+			scorer.updateScore(this.transform.localScale.x);
 
-        HandleContact();
+			HandleContact();
+		}
     }
 
     void HandleContact()

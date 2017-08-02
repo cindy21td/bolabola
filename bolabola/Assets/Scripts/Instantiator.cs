@@ -5,18 +5,33 @@ using UnityEngine;
 public class Instantiator : MonoBehaviour {
 
     public GameObject ASTEROID_PREFAB;
-    public float SPAWN_HEIGHT;
-    public float MIN_X;
-    public float MAX_X;
+
+	public float TOP_SCREEN;
+	public float RIGHT_SCREEN;
+
+	private float SPAWN_HEIGHT;
+	private float MIN_X;
+	private float MAX_X;
+
     public float CHILD_X;
     public float CHILD_Y;
-    public float LIM_MIN_X;
-    public float LIM_MAX_X;
-    public float LIM_MAX_Y;
+
+	private float LIM_MIN_X;
+	private float LIM_MAX_X;
+	private float LIM_MAX_Y;
 
     // Use this for initialization
     void Start () {
-		
+		TOP_SCREEN = Camera.main.orthographicSize;
+		RIGHT_SCREEN = ((TOP_SCREEN * 2.0f * Screen.width) / Screen.height) / 2;
+
+		SPAWN_HEIGHT = TOP_SCREEN + 1f;
+		MIN_X = -1 * RIGHT_SCREEN + 0.5f;
+		MAX_X = RIGHT_SCREEN - 0.5f;
+
+		LIM_MIN_X = -1 * RIGHT_SCREEN;
+		LIM_MAX_X = RIGHT_SCREEN;
+		LIM_MAX_Y = TOP_SCREEN - 1f;
 	}
 	
 	// Update is called once per frame
@@ -26,12 +41,14 @@ public class Instantiator : MonoBehaviour {
 
     public void generateAsteroid()
     {
-        Instantiate(ASTEROID_PREFAB, new Vector2(Random.Range(MIN_X, MAX_X), SPAWN_HEIGHT), Quaternion.identity);
-    }
+		generateAsteroid (new Vector2 (Random.Range (MIN_X, MAX_X), SPAWN_HEIGHT));
+	}
 
     public void generateAsteroid(Vector2 position)
     {
-        Instantiate(ASTEROID_PREFAB, position, Quaternion.identity);
+        GameObject newAst = Instantiate(ASTEROID_PREFAB, position, Quaternion.identity);
+		newAst.tag = "NewAsteroid";
+		SpriteRenderer renderer = newAst.GetComponent<SpriteRenderer> ();
     }
 
     public void splitAsteroid(Vector3 parentPosition, Vector3 parentScale, float radius)

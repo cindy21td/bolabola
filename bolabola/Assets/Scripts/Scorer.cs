@@ -28,7 +28,6 @@ public class Scorer : MonoBehaviour {
 
     public void updateScore(float scale)
     {
-        print(scale);
         if (scale == 1f)
         {
             score += 1;

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Asteroid
   - Wall
+  - NewAsteroid
   layers:
   - Default
   - TransparentFX

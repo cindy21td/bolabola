@@ -7,13 +7,20 @@ public class Gameplay : MonoBehaviour {
 
     public float BASE_SPAWN_TIME;
     public int BASE_CYCLE;
-    public float FIRST_AST_X;
-    public float FIRST_AST_Y;
+
+    private float FIRST_AST_X;
+	private float FIRST_AST_Y;
+
     public Instantiator instantiator;
     public GameObject gameOverPanel;
     public GameObject instructionPanel;
     public GameObject readyPanel;
     public Text readyText;
+
+	public GameObject SIDE_1;
+	public GameObject SIDE_2;
+	public GameObject CEILING;
+	public GameObject FLOOR;
 
     private enum GameState
     {
@@ -23,7 +30,7 @@ public class Gameplay : MonoBehaviour {
         Over
     }
 
-    private float SPAWN_TIME_LIMIT = 3f;
+    private float SPAWN_TIME_LIMIT = 2f;
     private float READY_TIMER = 1f;
 
     private float curentSpawnTime;
@@ -40,6 +47,18 @@ public class Gameplay : MonoBehaviour {
         currentReadyValue = 3;
 
         currentGameState = GameState.Start;
+
+		// COPY OF TOP_SCREEN & RIGHT_SCREEN
+		float TOP_SCREEN = Camera.main.orthographicSize;
+		float RIGHT_SCREEN = ((TOP_SCREEN * 2.0f * Screen.width) / Screen.height) / 2;
+
+		FIRST_AST_X = 0;
+		FIRST_AST_Y = TOP_SCREEN + 1f;
+
+		SIDE_1.transform.position = new Vector2 (RIGHT_SCREEN + 0.5f, 0);
+		SIDE_2.transform.position = new Vector2 (-1 * RIGHT_SCREEN - 0.5f, 0);
+		CEILING.transform.position = new Vector2 (0, TOP_SCREEN - 0.5f);
+		FLOOR.transform.position = new Vector2 (0, -1 * TOP_SCREEN - 0.5f);
 	}
 	
 	// Update is called once per frame
